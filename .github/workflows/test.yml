@@ -63,7 +63,7 @@ jobs:
     
     - name: Check code formatting with Black
       run: |
-        black --check *.py --line-length 100 --exclude 'flightradar24\.py|logger\.py'
+        black --check adsbexchange.py flight_logger.py config.py test_adsbexchange.py test_flight_logger.py examples.py setup.py --line-length 100
     
     - name: Lint with Ruff
       run: |
