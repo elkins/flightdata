@@ -1,0 +1,7 @@
+{
+  "api_key": "your-rapidapi-key-here",
+  "use_rapid_api": false,
+  "default_radius_km": 100,
+  "default_center_lat": 37.7749,
+  "default_center_lon": -122.4194
+}
