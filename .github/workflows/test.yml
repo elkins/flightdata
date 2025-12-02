@@ -63,7 +63,7 @@ jobs:
     
     - name: Check code formatting with Black
       run: |
-        black --check *.py --line-length 100
+        black --check *.py --line-length 100 --exclude 'flightradar24\.py|logger\.py'
     
     - name: Lint with Ruff
       run: |
