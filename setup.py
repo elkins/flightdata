@@ -16,7 +16,8 @@ setup(
     long_description_content_type="text/markdown",
     author="George Elkins",
     url="https://github.com/elkins/flightdata",
-    py_modules=["adsbexchange", "flight_logger"],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     python_requires=">=3.8",
     install_requires=[
         "requests>=2.31.0",

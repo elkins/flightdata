@@ -13,7 +13,7 @@ import json
 import numpy as np
 import logging
 
-from adsbexchange import FlightData, ADSBExchangeClient
+from flightdata.adsbexchange import FlightData, ADSBExchangeClient
 
 __all__ = [
     "FlightLogger",

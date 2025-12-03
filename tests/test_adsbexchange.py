@@ -9,8 +9,13 @@ from datetime import datetime
 from pathlib import Path
 import tempfile
 import json
+import sys
+from pathlib import Path
 
-from adsbexchange import (
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from flightdata.adsbexchange import (
     FlightData,
     ADSBExchangeClient,
     get_flights_all,
@@ -114,7 +119,7 @@ class TestADSBExchangeClient(unittest.TestCase):
         with self.assertRaises(ValueError):
             ADSBExchangeClient(use_rapid_api=True)
 
-    @patch("adsbexchange.requests.Session.get")
+    @patch("flightdata.adsbexchange.requests.Session.get")
     def test_get_all_flights(self, mock_get):
         """Test fetching all flights."""
         # Mock API response
@@ -135,7 +140,7 @@ class TestADSBExchangeClient(unittest.TestCase):
         self.assertEqual(flights[0].icao, "A12345")
         self.assertEqual(flights[1].icao, "B67890")
 
-    @patch("adsbexchange.requests.Session.get")
+    @patch("flightdata.adsbexchange.requests.Session.get")
     def test_get_flight_by_icao(self, mock_get):
         """Test fetching specific flight by ICAO."""
         mock_response = Mock()
@@ -153,7 +158,7 @@ class TestADSBExchangeClient(unittest.TestCase):
             self.assertEqual(flight.icao, "A12345")
             self.assertEqual(flight.flight, "UAL123")
 
-    @patch("adsbexchange.requests.Session.get")
+    @patch("flightdata.adsbexchange.requests.Session.get")
     def test_get_flight_by_icao_not_found(self, mock_get):
         """Test fetching non-existent flight."""
         mock_response = Mock()
@@ -166,7 +171,7 @@ class TestADSBExchangeClient(unittest.TestCase):
 
         self.assertIsNone(flight)
 
-    @patch("adsbexchange.requests.Session.get")
+    @patch("flightdata.adsbexchange.requests.Session.get")
     def test_get_flights_by_bounds(self, mock_get):
         """Test filtering flights by geographic bounds."""
         mock_response = Mock()
@@ -191,7 +196,7 @@ class TestADSBExchangeClient(unittest.TestCase):
 class TestConvenienceFunctions(unittest.TestCase):
     """Test module-level convenience functions."""
 
-    @patch("adsbexchange.ADSBExchangeClient")
+    @patch("flightdata.adsbexchange.ADSBExchangeClient")
     def test_get_flights_all(self, mock_client_class):
         """Test get_flights_all convenience function."""
         mock_client = Mock()
@@ -209,7 +214,7 @@ class TestConvenienceFunctions(unittest.TestCase):
             self.assertEqual(flights[0].icao, "A12345")
         mock_client_class.assert_called_once()
 
-    @patch("adsbexchange.ADSBExchangeClient")
+    @patch("flightdata.adsbexchange.ADSBExchangeClient")
     def test_get_flight_by_icao_function(self, mock_client_class):
         """Test get_flight_by_icao convenience function."""
         mock_client = Mock()

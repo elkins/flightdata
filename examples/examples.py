@@ -3,8 +3,14 @@
 Example scripts demonstrating how to use the flightdata library.
 """
 
-from adsbexchange import get_flights_all, ADSBExchangeClient
-from flight_logger import FlightLogger, calculate_distance
+import sys
+from pathlib import Path
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from flightdata.adsbexchange import get_flights_all, ADSBExchangeClient
+from flightdata.flight_logger import FlightLogger, calculate_distance
 from datetime import datetime
 
 

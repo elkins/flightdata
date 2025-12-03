@@ -14,45 +14,47 @@ help:
 	@echo "  make examples   - Run all examples"
 
 install:
-	pip install -r requirements.txt
+	pip install -e .
 
 install-dev:
-	pip install -r requirements.txt
-	pip install pytest pytest-cov black ruff mypy
+	pip install -e ".[dev]"
 
 test:
-	python -m pytest -v
+	python -m pytest tests/ -v
 
 coverage:
-	python -m pytest --cov=. --cov-report=html --cov-report=term
+	python -m pytest tests/ --cov=src/flightdata --cov-report=html --cov-report=term
 	@echo "Coverage report generated in htmlcov/index.html"
 
 format:
-	black *.py --line-length 100
+	black src/ tests/ examples/ setup.py --line-length 100
 
 lint:
-	ruff check *.py
+	ruff check src/ tests/ examples/
 
 typecheck:
-	mypy adsbexchange.py flight_logger.py config.py
+	mypy src/flightdata/ --ignore-missing-imports
 
 clean:
 	rm -rf __pycache__
+	rm -rf **/__pycache__
 	rm -rf .pytest_cache
 	rm -rf htmlcov
 	rm -rf .coverage
 	rm -rf *.pyc
+	rm -rf **/*.pyc
 	rm -rf *.csv
 	rm -rf *.json
 	rm -rf build dist *.egg-info
+	rm -rf src/*.egg-info
 
 run:
-	python adsbexchange.py
+	python -m flightdata.adsbexchange
 
 examples:
-	python examples.py
+	python examples/examples.py
 
 config:
-	python config.py .flightdata.json
+	python -c "from flightdata.config import Config; Config.create_template('.flightdata.json')"
 	@echo "Configuration template created!"
 	@echo "Edit .flightdata.json to add your API key"

@@ -9,9 +9,14 @@ from pathlib import Path
 import tempfile
 import csv
 import json
+import sys
+from pathlib import Path
 
-from adsbexchange import FlightData
-from flight_logger import (
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from flightdata.adsbexchange import FlightData
+from flightdata.flight_logger import (
     calculate_distance,
     filter_by_radius,
     filter_by_altitude,
@@ -275,7 +280,7 @@ class TestFlightLogger(unittest.TestCase):
         self.assertEqual(result, logger)
         self.assertEqual(len(logger.filters), 3)
 
-    @patch("flight_logger.ADSBExchangeClient")
+    @patch("flightdata.flight_logger.ADSBExchangeClient")
     def test_get_flights_with_filters(self, mock_client_class):
         """Test getting filtered flights."""
         # Create mock flights
